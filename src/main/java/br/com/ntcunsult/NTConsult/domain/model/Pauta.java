@@ -43,11 +43,6 @@ public class Pauta {
     @JsonProperty
     private Integer votos_nao;
 
-    @Column(name = "RESULTADO", nullable = false)
-    @Enumerated(EnumType.STRING)
-    @JsonProperty
-    private ResultadoEnum resultado;
-
     @ManyToOne
     @JoinColumn(name = "ID_SESSAO", nullable = true)
     @JsonProperty

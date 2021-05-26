@@ -7,12 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Entity
 @Table(name = "NT_SESSAO")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Sessao {
+public class Sessao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,9 +32,9 @@ public class Sessao {
     @JsonProperty
     private Long duracao;
 
-    @Column(name = "TEMPO_RESTANTE")
+    @Column(name = "FINAL_DA_SESSAO")
     @JsonProperty
-    private Long tempo_restante;
+    private LocalTime final_sessao;
 
     @Column(name = "STATUS_SESSAO")
     @Enumerated(EnumType.STRING)

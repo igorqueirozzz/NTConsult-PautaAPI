@@ -1,16 +1,20 @@
 package br.com.ntcunsult.NTConsult.DTO;
 
 import br.com.ntcunsult.NTConsult.domain.model.Pauta;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.ManagedBean;
+import java.io.Serializable;
 
 @ManagedBean
 @Data
-public class PautaDTO {
+public class PautaDTO implements Serializable {
 
-    private Pauta pauta;
+    @JsonProperty
+    private String assunto;
 
-    private Long tempo_sessao;
+    @JsonProperty
+    private String descricao;
 }

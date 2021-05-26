@@ -6,14 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SessaoDTO implements Serializable {
+public class CooperadoDTO implements Serializable {
+
     @JsonProperty
     private Long pauta_id;
+
     @JsonProperty
-    private Long duracao;
-    
+    private String cpf;
+
+    @JsonProperty
+    private String voto;
 }

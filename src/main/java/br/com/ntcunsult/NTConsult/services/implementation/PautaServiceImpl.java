@@ -1,21 +1,23 @@
 package br.com.ntcunsult.NTConsult.services.implementation;
 
+import br.com.ntcunsult.NTConsult.DTO.CooperadoDTO;
 import br.com.ntcunsult.NTConsult.DTO.PautaDTO;
+import br.com.ntcunsult.NTConsult.domain.Abstract.CPFValidacao;
 import br.com.ntcunsult.NTConsult.domain.Abstract.PautaValidacao;
 import br.com.ntcunsult.NTConsult.domain.enumeration.ResultadoEnum;
 import br.com.ntcunsult.NTConsult.domain.enumeration.StatusPautaEnum;
-import br.com.ntcunsult.NTConsult.domain.enumeration.StatusSessaoEnum;
 import br.com.ntcunsult.NTConsult.domain.model.Pauta;
-import br.com.ntcunsult.NTConsult.domain.model.Sessao;
 import br.com.ntcunsult.NTConsult.domain.repository.PautaRepository;
-import br.com.ntcunsult.NTConsult.domain.repository.SessaoRepository;
+import br.com.ntcunsult.NTConsult.exception.VotoException;
 import br.com.ntcunsult.NTConsult.services.PautaService;
 import br.com.ntcunsult.NTConsult.services.SessaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class PautaServiceImpl implements PautaService {
@@ -27,20 +29,53 @@ public class PautaServiceImpl implements PautaService {
     PautaRepository pautaRepository;
 
     @Autowired
-    SessaoRepository sessaoRepository;
-
-    @Autowired
     SessaoService sessaoService;
+
+//    @Autowired
+//    CPFValidacao cpfValidacao;
 
     @Override
     public ResponseEntity cadastrarPauta(PautaDTO pautaDTO) throws Exception {
-        Pauta pauta = pautaDTO.getPauta();
-        pauta.setResultado(ResultadoEnum.NAOVOTADA);
+        Pauta pauta = new Pauta();
+        pauta.setAssunto(pautaDTO.getAssunto());
+        pauta.setDescricao(pautaDTO.getDescricao());
         pauta.setStatus(StatusPautaEnum.NAOREALIZADA);
         pautaValidacao.validar(pauta);
         pautaRepository.save(pauta);
-        sessaoService.aplicarSessao(pautaDTO.getPauta().getId_pauta(), pautaDTO.getTempo_sessao());
-        return ResponseEntity.ok("Pauta Nº" + pautaDTO.getPauta().getId_pauta() + " cadastrada com sucesso!");
+        sessaoService.aplicarSessao(pauta.getId_pauta());
+        return ResponseEntity.ok("Pauta Nº" + pauta.getId_pauta() + " cadastrada com sucesso!");
     }
+
+    @Override
+    public void alterarStatus(Long pauta_id, StatusPautaEnum statusPautaEnum) {
+        Optional<Pauta> pauta = pautaRepository.findById(pauta_id);
+        if (!pauta.isEmpty()){
+            Pauta pautaAlterar = pauta.get();
+            pautaAlterar.setStatus(statusPautaEnum);
+            pautaRepository.save(pautaAlterar);
+        }
+    }
+
+    @Override
+    public List<Pauta> findAllFinalizadas() {
+        return pautaRepository.findAllFinalizadas();
+    }
+
+    @Override
+    public List<Pauta> findAllNaoFinalizadas() {
+        return pautaRepository.findAllNaoFinalizadas();
+    }
+
+    @Override
+    public List<Pauta> findAllEmVotacao() {
+        return pautaRepository.findAllEmVotacao();
+    }
+
+//    @Override
+//    public void votarEmUmaPauta(CooperadoDTO cooperadoDTO) {
+//        cpfValidacao.validarCPF(cooperadoDTO.getCpf());
+//        VotoException.validarVoto(cooperadoDTO.getVoto());
+//    }
+
 
 }

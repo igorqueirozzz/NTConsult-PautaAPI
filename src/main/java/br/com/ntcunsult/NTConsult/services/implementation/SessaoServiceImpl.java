@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.Optional;
 
 @Service
@@ -22,15 +23,12 @@ public class SessaoServiceImpl implements SessaoService {
     PautaRepository pautaRepository;
 
     @Override
-    public ResponseEntity aplicarSessao(Long pautaid, Long tempoSessao) {
+    public ResponseEntity aplicarSessao(Long pautaid) {
         Sessao sessao = new Sessao();
         sessao.setStatus_sessao(StatusSessaoEnum.NAOINICIADA);
         sessao.setPauta_id(pautaid);
-        sessao.setDuracao(100000L);
+        sessao.setDuracao(1L);
         Pauta pautaAlterar = new Pauta();
-        if (tempoSessao != null && tempoSessao >= 100000L){
-            sessao.setDuracao(tempoSessao);
-        }
         try {
             sessaoRepository.save(sessao);
             Optional<Pauta> pauta = pautaRepository.findById(pautaid);
