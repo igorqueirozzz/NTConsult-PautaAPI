@@ -8,10 +8,14 @@ import br.com.ntcunsult.NTConsult.domain.enumeration.StatusSessaoEnum;
 import br.com.ntcunsult.NTConsult.domain.model.Pauta;
 import br.com.ntcunsult.NTConsult.domain.model.Sessao;
 import br.com.ntcunsult.NTConsult.domain.repository.PautaRepository;
+import br.com.ntcunsult.NTConsult.domain.repository.SessaoRepository;
 import br.com.ntcunsult.NTConsult.services.PautaService;
+import br.com.ntcunsult.NTConsult.services.SessaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Random;
 
 @Service
 public class PautaServiceImpl implements PautaService {
@@ -22,22 +26,21 @@ public class PautaServiceImpl implements PautaService {
     @Autowired
     PautaRepository pautaRepository;
 
+    @Autowired
+    SessaoRepository sessaoRepository;
+
+    @Autowired
+    SessaoService sessaoService;
+
     @Override
     public ResponseEntity cadastrarPauta(PautaDTO pautaDTO) throws Exception {
         Pauta pauta = pautaDTO.getPauta();
         pauta.setResultado(ResultadoEnum.NAOVOTADA);
         pauta.setStatus(StatusPautaEnum.NAOREALIZADA);
         pautaValidacao.validar(pauta);
-       // pauta.setSessao(aplicarSessao(pauta.getId_pauta(), pautaDTO.getTempo_sessao()));
         pautaRepository.save(pauta);
+        sessaoService.aplicarSessao(pautaDTO.getPauta().getId_pauta(), pautaDTO.getTempo_sessao());
         return ResponseEntity.ok("Pauta Nº" + pautaDTO.getPauta().getId_pauta() + " cadastrada com sucesso!");
     }
 
-    public Sessao aplicarSessao(Long pautaId, Long tempoSessao){
-        Sessao sessao = new Sessao();
-        sessao.setStatus_sessao(StatusSessaoEnum.NAOINICIADA);
-        sessao.setDuracao(tempoSessao);
-        sessao.setPauta_id(pautaId);
-        return sessao;
-    }
 }
