@@ -7,15 +7,17 @@ import br.com.ntcunsult.NTConsult.domain.model.Pauta;
 import br.com.ntcunsult.NTConsult.exception.SessaoException;
 import br.com.ntcunsult.NTConsult.services.PautaService;
 import br.com.ntcunsult.NTConsult.services.SessaoManagerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
-@RequestMapping
+@RequestMapping(value = "/PautaApi")
+@Api(value = "API REST Pauta Votação")
 public class Controller {
 
     @Autowired
@@ -23,16 +25,8 @@ public class Controller {
     @Autowired
     SessaoManagerService sessaoManagerService;
 
-    @GetMapping("/home")
-    public String home(){
-        return "/CadastrarPauta: Cadastre uma nova Pauta.\n\n\n" +
-                "/AbrirSessao: Abra a sessão de votação de uma pauta já criada.\n" +
-                "/VerPautasFinalizadas: veja todas as pautas finalizada e seu resultado.\n" +
-                "/VerPautasCriadas: Veja todas as pautas criadas.\n" +
-                "/VerPautasEmVotacao: Veja todas as pautas em votação\n" +
-                "/Votar: Vote em uma pauta";
-    }
 
+    @ApiOperation(value = "Este método Cadastra uma pauta para ser votada.")
     @PostMapping("/CadastrarPauta")
     public ResponseEntity cadastrarPauta(@RequestBody PautaDTO pautaDTO){
         try {
@@ -43,6 +37,7 @@ public class Controller {
         }
     }
 
+    @ApiOperation(value = "Este método inicia a sessão de votação de um pauta previamente definida.")
     @PostMapping("/AbrirSessaoDeVotacao")
     public ResponseEntity abrirSessaoDeVotacao(@RequestBody SessaoDTO sessaoDTO){
         if (sessaoDTO.getDuracao() > 60 || sessaoDTO.getDuracao() < 1){
@@ -51,6 +46,7 @@ public class Controller {
         return sessaoManagerService.abrirSessao(sessaoDTO);
     }
 
+    @ApiOperation(value = "Este método retorna uma lista com todas as pautas que já foram votadas.")
     @GetMapping("/VerPautasFinalizadas")
     public ResponseEntity<List<Pauta>> getAllPautasFinalizadas(){
         List<Pauta> pautas = pautaService.findAllFinalizadas();
@@ -61,9 +57,10 @@ public class Controller {
         }
     }
 
-    @GetMapping("/VerPautasNaoFinalizadas")
+    @ApiOperation(value = "Este método retorna todas as pautas que ainda não iniciaram a votação.")
+    @GetMapping("/VerPautasNaoIniciadas")
     public ResponseEntity<List<Pauta>> getAllPautasNaoFinalizadas(){
-        List<Pauta> pautas = pautaService.findAllNaoFinalizadas();
+        List<Pauta> pautas = pautaService.findAllNaoIniciadas();
         if (!pautas.isEmpty()){
             return  ResponseEntity.ok(pautas);
         }else{
@@ -71,6 +68,7 @@ public class Controller {
         }
     }
 
+    @ApiOperation(value = "Este método retorna todas as pautas em votação no momento.")
     @GetMapping("/VerPautasEmVotacao")
     public ResponseEntity<List<Pauta>> getAllPautasEmVotacao(){
         List<Pauta> pautas = pautaService.findAllEmVotacao();
@@ -81,10 +79,11 @@ public class Controller {
         }
     }
 
+    @ApiOperation(value = "Este método regista um voto em uma pauta que esta em votação.")
     @PostMapping("/Votar")
     public ResponseEntity votarEmUmaPauta(@RequestBody CooperadoDTO cooperadoDTO){
-
-        return null;
+        pautaService.votarEmUmaPauta(cooperadoDTO);
+        return ResponseEntity.ok("VOTO REALIZADO COM SUCESSO.");
     }
 
 }

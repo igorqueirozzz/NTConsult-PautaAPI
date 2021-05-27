@@ -27,7 +27,7 @@ public class SessaoManagerServiceImpl implements SessaoManagerService {
     @Autowired
     PautaService pautaService;
 
-    private Map<Long, LocalTime> sessoesEmVotacao = new HashMap<Long, LocalTime>();
+    private static Map<Long, LocalTime> sessoesEmVotacao = new HashMap<Long, LocalTime>();
 
     @Override
     public ResponseEntity abrirSessao(SessaoDTO sessaoDTO) {

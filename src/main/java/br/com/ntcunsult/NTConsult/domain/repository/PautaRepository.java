@@ -14,8 +14,8 @@ public interface PautaRepository extends JpaRepository<Pauta, Long> {
     @Query(value = "SELECT * FROM NT_PAUTAS WHERE NT_PAUTAS.STATUS = 'FINALIZADA'", nativeQuery = true)
     List<Pauta> findAllFinalizadas();
 
-    @Query(value = "SELECT * FROM NT_PAUTAS WHERE NT_PAUTAS.STATUS = 'NAOREALIZADA' OR NT_PAUTAS.STATUS = 'EMVOTACAO' ", nativeQuery = true)
-    List<Pauta> findAllNaoFinalizadas();
+    @Query(value = "SELECT * FROM NT_PAUTAS WHERE NT_PAUTAS.STATUS = 'NAOREALIZADA'", nativeQuery = true)
+    List<Pauta> findAllNaoIniciadas();
 
     @Query(value = "SELECT * FROM NT_PAUTAS WHERE NT_PAUTAS.STATUS = 'EMVOTACAO'", nativeQuery = true)
     List<Pauta> findAllEmVotacao();

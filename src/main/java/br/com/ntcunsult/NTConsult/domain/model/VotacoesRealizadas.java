@@ -24,7 +24,7 @@ public class VotacoesRealizadas implements Serializable {
     @JsonProperty
     private Long id_pauta;
 
-    @Column(name = "CPF_COOPERADO")
+    @Column(name = "CPF_COOPERADO", nullable = false)
     @JsonProperty
     private String cpf_cooperado;
 
