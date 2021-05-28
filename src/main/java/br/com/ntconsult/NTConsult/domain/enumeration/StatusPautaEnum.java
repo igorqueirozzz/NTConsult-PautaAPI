@@ -4,6 +4,6 @@ public enum StatusPautaEnum {
 
     NAOREALIZADA,
     EMVOTACAO,
-    FINALIZADA;
+    FINALIZADA,
 
 }

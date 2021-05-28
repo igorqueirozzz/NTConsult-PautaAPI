@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/PautaApi")
 @Api(value = "API REST Pauta Votação")
-public class Controller {
+public class ApplicationController {
 
     @Autowired
     PautaService pautaService;
@@ -26,7 +26,7 @@ public class Controller {
     SessaoManagerService sessaoManagerService;
 
 
-    @ApiOperation(value = "Este método Cadastra uma pauta para ser votada.")
+    @ApiOperation(value = "Cadastra uma pauta para ser votada.")
     @PostMapping("/cadastrarPauta")
     public ResponseEntity cadastrarPauta(@RequestBody PautaDTO pautaDTO){
         try {
@@ -37,16 +37,17 @@ public class Controller {
         }
     }
 
-    @ApiOperation(value = "Este método inicia a sessão de votação de um pauta previamente definida.")
+    @ApiOperation(value = "Inicia a sessão de votação de uma pauta previamente definida.")
     @PostMapping("/abrirSessaoVotacao")
-    public ResponseEntity abrirSessaoDeVotacao(@RequestBody SessaoDTO sessaoDTO){
+    public ResponseEntity abrirSessaoVotacao(@RequestBody SessaoDTO sessaoDTO){
         if (sessaoDTO.getDuracao() > 60 || sessaoDTO.getDuracao() < 1){
             throw new SessaoException("A DURAÇÃO DA VOTAÇÃO DEVERÁ SER DE NO MINIMO 1 MINUTO E NO MAXIMO 60 MINUTOS");
         }
-        return sessaoManagerService.abrirSessao(sessaoDTO);
+         ResponseEntity responseEntity = sessaoManagerService.abrirSessao(sessaoDTO);
+        return responseEntity;
     }
 
-    @ApiOperation(value = "Este método retorna uma lista com todas as pautas que já foram votadas.")
+    @ApiOperation(value = "Retorna uma lista com todas as pautas que já foram votadas.")
     @GetMapping("/verPautasFinalizadas")
     public ResponseEntity<List<Pauta>> getAllPautasFinalizadas(){
         List<Pauta> pautas = pautaService.findAllFinalizadas();
@@ -57,7 +58,7 @@ public class Controller {
         }
     }
 
-    @ApiOperation(value = "Este método retorna todas as pautas que ainda não iniciaram a votação.")
+    @ApiOperation(value = "Retorna todas as pautas que ainda não iniciaram a votação.")
     @GetMapping("/verPautasNaoIniciadas")
     public ResponseEntity<List<Pauta>> getAllPautasNaoFinalizadas(){
         List<Pauta> pautas = pautaService.findAllNaoIniciadas();
@@ -68,7 +69,7 @@ public class Controller {
         }
     }
 
-    @ApiOperation(value = "Este método retorna todas as pautas em votação no momento.")
+    @ApiOperation(value = "Retorna todas as pautas em votação.")
     @GetMapping("/verPautasEmVotacao")
     public ResponseEntity<List<Pauta>> getAllPautasEmVotacao(){
         List<Pauta> pautas = pautaService.findAllEmVotacao();
@@ -79,9 +80,9 @@ public class Controller {
         }
     }
 
-    @ApiOperation(value = "Este método regista um voto em uma pauta que esta em votação.")
+    @ApiOperation(value = "Registra um voto em uma pauta que esta em votação.")
     @PostMapping("/votar")
-    public ResponseEntity votarEmUmaPauta(@RequestBody CooperadoDTO cooperadoDTO){
+    public ResponseEntity votarEmUmaPauta(@RequestBody CooperadoDTO cooperadoDTO) throws Exception {
         pautaService.votarEmUmaPauta(cooperadoDTO);
         return ResponseEntity.ok("VOTO REALIZADO COM SUCESSO.");
     }

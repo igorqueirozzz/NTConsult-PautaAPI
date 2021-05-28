@@ -7,13 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "NT_PAUTAS")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Pauta {
+public class Pauta implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,16 +35,16 @@ public class Pauta {
     @JsonProperty
     private StatusPautaEnum status;
 
-    @Column(name = "VOTOS_SIM", nullable = true)
+    @Column(name = "VOTOS_SIM")
     @JsonProperty
     private Integer votos_sim;
 
-    @Column(name = "VOTOS_NAO", nullable = true)
+    @Column(name = "VOTOS_NAO")
     @JsonProperty
     private Integer votos_nao;
 
     @ManyToOne
-    @JoinColumn(name = "ID_SESSAO", nullable = true)
+    @JoinColumn(name = "ID_SESSAO")
     @JsonProperty
     private Sessao sessao;
 

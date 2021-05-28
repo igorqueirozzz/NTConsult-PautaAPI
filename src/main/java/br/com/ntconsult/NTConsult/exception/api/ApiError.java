@@ -1,10 +1,6 @@
 package br.com.ntconsult.NTConsult.exception.api;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class ApiError {
 

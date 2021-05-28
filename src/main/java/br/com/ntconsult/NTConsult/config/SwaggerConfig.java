@@ -1,4 +1,5 @@
 package br.com.ntconsult.NTConsult.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -37,7 +38,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("NTConsult API Pauta Votação")
-                .description("Api REST para votações em pautas")
+                .description("Api REST para votação em pautas")
                 .version("1.0")
                 .build();
     }

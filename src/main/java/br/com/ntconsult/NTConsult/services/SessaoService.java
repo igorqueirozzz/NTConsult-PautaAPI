@@ -6,5 +6,4 @@ public interface SessaoService {
 
     ResponseEntity aplicarSessao(Long pautaid);
 
-
 }

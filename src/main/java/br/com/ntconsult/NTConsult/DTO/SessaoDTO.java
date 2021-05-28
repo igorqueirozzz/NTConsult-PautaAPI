@@ -11,6 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 public class SessaoDTO implements Serializable {
+
     @JsonProperty
     private Long pauta_id;
     @JsonProperty

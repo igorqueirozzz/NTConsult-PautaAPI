@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -19,4 +20,6 @@ public interface PautaRepository extends JpaRepository<Pauta, Long> {
 
     @Query(value = "SELECT * FROM NT_PAUTAS WHERE NT_PAUTAS.STATUS = 'EMVOTACAO'", nativeQuery = true)
     List<Pauta> findAllEmVotacao();
+
+
 }

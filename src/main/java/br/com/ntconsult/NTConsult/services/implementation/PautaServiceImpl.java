@@ -4,7 +4,6 @@ import br.com.ntconsult.NTConsult.DTO.CooperadoDTO;
 import br.com.ntconsult.NTConsult.DTO.PautaDTO;
 import br.com.ntconsult.NTConsult.domain.Abstract.CPFValidacao;
 import br.com.ntconsult.NTConsult.domain.Abstract.PautaValidacao;
-import br.com.ntconsult.NTConsult.domain.Abstract.VotacaoValidacao;
 import br.com.ntconsult.NTConsult.domain.enumeration.StatusPautaEnum;
 import br.com.ntconsult.NTConsult.domain.enumeration.StatusSessaoEnum;
 import br.com.ntconsult.NTConsult.domain.model.Pauta;
@@ -17,6 +16,7 @@ import br.com.ntconsult.NTConsult.services.PautaService;
 import br.com.ntconsult.NTConsult.services.SessaoService;
 import br.com.ntconsult.NTConsult.exception.PautaException;
 import br.com.ntconsult.NTConsult.exception.SessaoException;
+import br.com.ntconsult.NTConsult.services.VotacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -44,10 +44,25 @@ public class PautaServiceImpl implements PautaService {
     VotacoesRealizadasRepository votacoesRealizadasRepository;
 
     @Autowired
-    VotacaoValidacao votacaoValidacao;
+    VotacaoService votacaoService;
 
     @Autowired
     CPFValidacao cpfValidacao;
+
+    @Override
+    public List<Pauta> findAllFinalizadas() {
+        return pautaRepository.findAllFinalizadas();
+    }
+
+    @Override
+    public List<Pauta> findAllNaoIniciadas() {
+        return pautaRepository.findAllNaoIniciadas();
+    }
+
+    @Override
+    public List<Pauta> findAllEmVotacao() {
+        return pautaRepository.findAllEmVotacao();
+    }
 
     @Override
     public ResponseEntity cadastrarPauta(PautaDTO pautaDTO) throws Exception {
@@ -72,30 +87,18 @@ public class PautaServiceImpl implements PautaService {
     }
 
     @Override
-    public List<Pauta> findAllFinalizadas() {
-        return pautaRepository.findAllFinalizadas();
-    }
-
-    @Override
-    public List<Pauta> findAllNaoIniciadas() {
-        return pautaRepository.findAllNaoIniciadas();
-    }
-
-    @Override
-    public List<Pauta> findAllEmVotacao() {
-        return pautaRepository.findAllEmVotacao();
-    }
-
-    @Override
     public void votarEmUmaPauta(CooperadoDTO cooperadoDTO) throws Exception {
+
         cpfValidacao.validarCPF(cooperadoDTO.getCpf());
-        votacaoValidacao.validarVoto(cooperadoDTO);
-        votacaoValidacao.checarSeJaVotou(cooperadoDTO);
+        votacaoService.validarVoto(cooperadoDTO);
+        votacaoService.checarSeJaVotou(cooperadoDTO);
 
         Optional<Pauta> pauta = pautaRepository.findById(cooperadoDTO.getPauta_id());
         Optional<Sessao> sessao = sessaoRepository.findById(cooperadoDTO.getPauta_id());
+
         Pauta pautaVotar = new Pauta();
         Sessao sessaoVotar = new Sessao();
+
         int votoNao = 0;
         int votoSim = 0;
 
@@ -115,7 +118,7 @@ public class PautaServiceImpl implements PautaService {
         if (cooperadoDTO.getVoto().trim().equalsIgnoreCase("sim")){
             pautaVotar.setVotos_sim(votoSim + 1);
         }else if(cooperadoDTO.getVoto().trim().equalsIgnoreCase("nao") ||
-                 cooperadoDTO.getVoto().trim().equalsIgnoreCase("não")){
+                cooperadoDTO.getVoto().trim().equalsIgnoreCase("não")){
             pautaVotar.setVotos_nao(votoNao + 1);
         }
 
@@ -143,6 +146,5 @@ public class PautaServiceImpl implements PautaService {
         votacoesRealizadas.setCpf_cooperado(cooperadoDTO.getCpf());
         votacoesRealizadasRepository.save(votacoesRealizadas);
     }
-
 
 }

@@ -1,12 +1,14 @@
 package br.com.ntconsult.NTConsult.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.annotation.ManagedBean;
 import java.io.Serializable;
 
-@ManagedBean
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class PautaDTO implements Serializable {
 

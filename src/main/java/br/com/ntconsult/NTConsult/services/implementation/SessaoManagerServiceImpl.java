@@ -56,7 +56,8 @@ public class SessaoManagerServiceImpl implements SessaoManagerService {
        sessaoRepository.save(sessaoAbrir);
        timeSessaoManager(sessaoAbrir);
        pautaService.alterarStatus(sessaoAbrir.getPauta_id(), StatusPautaEnum.EMVOTACAO);
-        return ResponseEntity.ok("SESSÃO Nº" + sessaoAbrir.getId_sessao() + " ABERTA PARA VOTAÇÃO, DURAÇÃO: " + sessaoAbrir.getDuracao() + " MINUTOS");
+       System.out.println("INFO: SESSÃO Nº" + sessaoAbrir.getId_sessao() + " ABERTA PARA VOTAÇÃO, DURAÇÃO: " + sessaoAbrir.getDuracao() + " MINUTOS");
+       return ResponseEntity.ok("SESSÃO Nº" + sessaoAbrir.getId_sessao() + " ABERTA PARA VOTAÇÃO, DURAÇÃO: " + sessaoAbrir.getDuracao() + " MINUTOS");
     }
 
     void timeSessaoManager(Sessao sessao){
@@ -67,12 +68,10 @@ public class SessaoManagerServiceImpl implements SessaoManagerService {
     @Override
     @Scheduled(fixedRate = 3000)
     public void sessaoTimeProcessor() {
-
         for (Entry<Long, LocalTime> sessao: sessoesEmVotacao.entrySet()){
             if(LocalTime.now().isAfter(sessao.getValue())){
                 finalizarSessao(sessao.getKey());
                 sessoesEmVotacao.remove(sessao.getKey());
-                System.out.println("INFO: SESSÃO " + sessao.getKey() + " FINALIZADA!");
             }
         }
     }
@@ -85,6 +84,7 @@ public class SessaoManagerServiceImpl implements SessaoManagerService {
         sessaoFinalizar.setStatus_sessao(StatusSessaoEnum.FINALIZADA);
         sessaoRepository.save(sessaoFinalizar);
         pautaService.alterarStatus(sessaoFinalizar.getPauta_id(), StatusPautaEnum.FINALIZADA);
+        System.out.println("INFO: SESSÃO " + sessao_id + " FINALIZADA!");
     }
 
 }
