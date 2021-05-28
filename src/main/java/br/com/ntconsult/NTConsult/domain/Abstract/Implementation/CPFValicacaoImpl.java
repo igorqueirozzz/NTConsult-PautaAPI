@@ -15,39 +15,36 @@ public class CPFValicacaoImpl implements CPFValidacao {
 
 
     @Override
-    public void validarCPF(String cpf) throws IOException {
-
-        String url = "https://user-info.herokuapp.com/users/" + cpf;
-
-        HttpURLConnection conn = null;
-
+    public void validarCPF(String cpf) throws Exception {
         try {
-            conn = (HttpURLConnection) new URL(url).openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-            if (conn.getResponseCode() != 200) {
-                System.out.println("Erro " + conn.getResponseCode() + " ao obter dados da URL " + url);
-                System.out.println("SERVIÇO DE VALIDAÇÃO EXTERNO FALHOU, VOTO COMPUTADO SEM VALIDAR CPF." +  conn.getResponseMessage());
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-            StringBuffer response = new StringBuffer();
-
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                response.append(line);
-            }
-            if (response.toString().contains("UNABLE")){
-                throw new VotoException("CPF INVÁLIDO.");
-            }
-        } catch (ProtocolException e) {
-            System.out.println("SISTEMA DE VALIDAÇAO DE CPF EXTERNO FALHOU.");
+            validacaoExterna(cpf);
+        } catch (Exception e){
+            System.out.println("SISTEMA DE VALIDAÇÃO EXTERNA FALHOU O VOTO SERÁ COMPUTADO SEM VALIDAÇÃO DO CPF.");
         }
 
+    }
 
+    @Override
+    public void validacaoExterna(String cpf) throws Exception {
+        String url = "https://user-info.herokuapp.com/users/" + cpf;
 
+        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
 
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Accept", "application/json");
+        if (conn.getResponseCode() != 200) {
+            System.out.println("Erro " + conn.getResponseCode() + " ao obter dados da URL " + url);
+        }
 
+        BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+        StringBuffer response = new StringBuffer();
+
+        String line = null;
+        while ((line = br.readLine()) != null) {
+            response.append(line);
+        }
+        if (response.toString().contains("UNABLE")){ throw new VotoException("CPF INVÁLIDO.");
+        }
         conn.disconnect();
     }
 }

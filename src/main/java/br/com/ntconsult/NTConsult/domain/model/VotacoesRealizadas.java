@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "NT_VOTACOES_REALIZADAS")
+@Table(schema = "public", name = "NT_VOTACOES_REALIZADAS")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

@@ -35,7 +35,7 @@ public class SessaoManagerServiceImpl implements SessaoManagerService {
             throw new SessaoException("INFORME O ID DA SESSÃO!");
         }
 
-       Optional<Sessao> sessao = sessaoRepository.findById(sessaoDTO.getPauta_id());
+       Optional<Sessao> sessao = sessaoRepository.findByPautaId(sessaoDTO.getPauta_id());
 
        if (sessao.isEmpty()){
            throw new SessaoException("SESSÃO NÃO ENCONTRADA NA BASE DE DADOS.");

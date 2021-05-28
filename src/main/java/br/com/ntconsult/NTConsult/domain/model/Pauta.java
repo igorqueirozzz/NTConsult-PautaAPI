@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "NT_PAUTAS")
+@Table(schema = "public",name = "NT_PAUTAS")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

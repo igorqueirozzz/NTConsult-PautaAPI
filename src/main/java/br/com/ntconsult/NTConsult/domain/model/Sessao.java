@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "NT_SESSAO")
+@Table(schema = "public", name = "NT_SESSAO")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -31,7 +31,7 @@ public class Sessao implements Serializable {
     @JsonProperty
     private Long duracao;
 
-    @Column(name = "FINAL_DA_SESSAO")
+    @Column(name = "FINAL_SESSAO")
     @JsonProperty
     private LocalTime final_sessao;
 
