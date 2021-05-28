@@ -2,8 +2,8 @@ CREATE SEQUENCE hibernate_sequence START 1;
 
 CREATE TABLE nt_sessao (
 	id_sessao BIGSERIAL PRIMARY KEY,
-	pauta_id BIGSERIAL,
-	duracao BIGSERIAL,
+	pauta_id BIGINT,
+	duracao BIGINT,
 	final_sessao Time,
 	status_sessao VARCHAR NOT NULL
 );
