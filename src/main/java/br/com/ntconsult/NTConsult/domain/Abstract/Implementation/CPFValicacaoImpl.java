@@ -4,10 +4,8 @@ import br.com.ntconsult.NTConsult.domain.Abstract.CPFValidacao;
 import br.com.ntconsult.NTConsult.exception.VotoException;
 import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 
 @Service

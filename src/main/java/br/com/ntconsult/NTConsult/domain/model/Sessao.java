@@ -17,6 +17,8 @@ import java.time.LocalTime;
 @Data
 public class Sessao implements Serializable {
 
+    private static final long serialVersionUID = -2937089804507072569L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_SESSAO")

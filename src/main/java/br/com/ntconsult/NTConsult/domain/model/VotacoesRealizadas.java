@@ -15,6 +15,8 @@ import java.io.Serializable;
 @Data
 public class VotacoesRealizadas implements Serializable {
 
+    private static final long serialVersionUID = 3252086413252073984L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty

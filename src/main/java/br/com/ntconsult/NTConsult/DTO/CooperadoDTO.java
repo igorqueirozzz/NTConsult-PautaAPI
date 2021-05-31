@@ -11,6 +11,8 @@ import java.io.Serializable;
 @Data
 public class CooperadoDTO implements Serializable {
 
+    private static final long serialVersionUID = -5810234404065011742L;
+
     @JsonProperty
     private Long pauta_id;
 

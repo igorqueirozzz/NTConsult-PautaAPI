@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Data
 public class PautaDTO implements Serializable {
 
+    private static final long serialVersionUID = 3764124644569942785L;
+
     @JsonProperty
     private String assunto;
 

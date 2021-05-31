@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Data
 public class SessaoDTO implements Serializable {
 
+    private static final long serialVersionUID = 8647113631629350510L;
+
     @JsonProperty
     private Long pauta_id;
     @JsonProperty

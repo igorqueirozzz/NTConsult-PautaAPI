@@ -16,6 +16,8 @@ import java.io.Serializable;
 @Data
 public class Pauta implements Serializable {
 
+    private static final long serialVersionUID = -7729941434043009538L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_PAUTA")
