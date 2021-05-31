@@ -1,22 +1,24 @@
-# NTConsult Puta API REST
+# NTConsult Pauta API REST
 ## _API REST Para votação de pautas._
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)]()
 
 ## Recursos
 
-- Cadastre Pautas com uma breve descrição
+- Cadastre Pautas com uma breve descrição.
 - Abra sessões de votos nas pautas cadastradas definindo um tempo de duração.
+- Consulte o status de cada pauta e a quantidade de votos recebidos.
+- Persista a quatidade de votos recebidos em cada pauta no banco de dados.
 ## Escolha técnica
 
 Tecnologias utilizadas no projeto.
 
-- [Java]() - linguagem de programação.
-- [Spring Boot]() - Gerenciador do projeto.
-- [Maven]() - Gerenciador de dependências.
-- [Hibernate + JPA]() - Persistência de dados.
-- [Swagger]() - Documentação da API.
-- [PostgreSQL]() - Banco de dados.
+- [Java](https://docs.oracle.com/en/java/) - linguagem de programação.
+- [Spring Boot](https://spring.io/projects/spring-boot) - Gerenciador do projeto.
+- [Maven](https://maven.apache.org/) - Gerenciador de dependências.
+- [Hibernate + JPA](https://hibernate.org/) - Persistência de dados.
+- [Swagger](https://swagger.io/) - Documentação da API.
+- [PostgreSQL](https://www.postgresql.org/) - Banco de dados.
 
 ## Requisitos
 
@@ -50,7 +52,7 @@ CREATE TABLE nt_pautas (
 
 CREATE TABLE nt_votacoes_realizadas (
 	id_votacoes_realizadas BIGSERIAL PRIMARY KEY,
-	id_pauta BIGSERIAL NOT NULL,
+	id_pauta BIGINT NOT NULL,
 	cpf_cooperado VARCHAR NOT NULL
 );
 ```

@@ -20,6 +20,6 @@ CREATE TABLE nt_pautas (
 
 CREATE TABLE nt_votacoes_realizadas (
 	id_votacoes_realizadas BIGSERIAL PRIMARY KEY,
-	id_pauta BIGSERIAL NOT NULL,
+	id_pauta BIGINT NOT NULL,
 	cpf_cooperado VARCHAR NOT NULL
 );
