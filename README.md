@@ -70,7 +70,7 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.properties.hibernate.format_sql=true
 ```
 
-Acesse a pasta raiz do projeto utilizando o prompt de comando e execute o projeto com o comando ```spring-boot:run```
+Acesse a pasta raiz do projeto utilizando o prompt de comando e execute o projeto com o comando ```mvn spring-boot:run```
 
 ## Utilização
 
