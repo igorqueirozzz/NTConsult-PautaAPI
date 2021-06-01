@@ -14,7 +14,6 @@ import br.com.ntconsult.applicationpauta.domain.repository.SessaoRepository;
 import br.com.ntconsult.applicationpauta.domain.repository.VotacoesRealizadasRepository;
 import br.com.ntconsult.applicationpauta.exception.VotoException;
 import br.com.ntconsult.applicationpauta.service.PautaService;
-import br.com.ntconsult.applicationpauta.service.SessaoService;
 import br.com.ntconsult.applicationpauta.exception.PautaException;
 import br.com.ntconsult.applicationpauta.exception.SessaoException;
 import br.com.ntconsult.applicationpauta.service.VotacaoService;
@@ -34,9 +33,6 @@ public class PautaServiceImpl implements PautaService {
 
     @Autowired
     PautaRepository pautaRepository;
-
-    @Autowired
-    SessaoService sessaoService;
 
     @Autowired
     SessaoRepository sessaoRepository;
@@ -80,7 +76,6 @@ public class PautaServiceImpl implements PautaService {
         pautaRepository.saveAndFlush(pauta);
         sessao.setPauta_id(pauta.getId_pauta());
         sessaoRepository.save(sessao);
-//        sessaoService.aplicarSessao(pauta.getId_pauta());
         return ResponseEntity.ok("Pauta Nº" + pauta.getId_pauta() + " cadastrada com sucesso!");
     }
 

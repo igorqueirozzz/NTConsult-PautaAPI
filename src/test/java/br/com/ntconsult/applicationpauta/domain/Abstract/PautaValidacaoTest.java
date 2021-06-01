@@ -3,6 +3,7 @@ package br.com.ntconsult.applicationpauta.domain.Abstract;
 import br.com.ntconsult.applicationpauta.domain.enumeration.StatusPautaEnum;
 import br.com.ntconsult.applicationpauta.domain.model.Pauta;
 import br.com.ntconsult.applicationpauta.domain.repository.PautaRepository;
+import br.com.ntconsult.applicationpauta.exception.PautaException;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,18 @@ public class PautaValidacaoTest {
 
     @Autowired
     PautaRepository pautaRepository;
+    @Autowired
+    PautaValidacao pautaValidacao;
+
+    @Test(expected = PautaException.class)
+    public void validar(){
+        Pauta pauta = new Pauta();
+        pauta.setAssunto("Teste");
+        pauta.setDescricao("Teste");
+        pauta.setStatus(StatusPautaEnum.NAOREALIZADA);
+        pautaRepository.save(pauta);
+        pautaValidacao.validar(pauta);
+    }
 
     @Test
     public void validarExistencia(){
