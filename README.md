@@ -30,12 +30,13 @@ O projeto requer:
 Crie um banco de dados no postgreSQL vá para src/main/resources e edite o arquivo "application-dev.properties" inserindo as informações do banco de dados postgreSQL como o exemplo abaixo:
 
 ```sh
-spring.datasource.url=jdbc:postgresql://localhost:5432/**NOMEDOBANCO**
-spring.datasource.username=**NOMEDEUSUARIO**
+spring.datasource.url=jdbc:postgresql://localhost:5432/SEUBANCO
+spring.datasource.username=**USUARIO**
 spring.datasource.password=**SENHA**
 spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.initialization-mode=always
 # Hibernate properties
-hibernate.hbm2ddl.auto = update;
+hibernate.hbm2ddl.auto=update;
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.properties.hibernate.format_sql=true
 ```
