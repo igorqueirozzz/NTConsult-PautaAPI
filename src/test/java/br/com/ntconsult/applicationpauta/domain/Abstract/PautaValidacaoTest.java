@@ -1,8 +1,10 @@
 package br.com.ntconsult.applicationpauta.domain.Abstract;
 
+import br.com.ntconsult.applicationpauta.domain.Abstract.Implementation.PautaValidacaoImpl;
 import br.com.ntconsult.applicationpauta.domain.enumeration.StatusPautaEnum;
 import br.com.ntconsult.applicationpauta.domain.model.Pauta;
 import br.com.ntconsult.applicationpauta.domain.repository.PautaRepository;
+import br.com.ntconsult.applicationpauta.exception.PautaException;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;

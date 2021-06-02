@@ -80,7 +80,6 @@ public class PautaServiceImpl implements PautaService {
         pautaRepository.saveAndFlush(pauta);
         sessao.setPauta_id(pauta.getId_pauta());
         sessaoRepository.save(sessao);
-//        sessaoService.aplicarSessao(pauta.getId_pauta());
         return ResponseEntity.ok("Pauta Nº" + pauta.getId_pauta() + " cadastrada com sucesso!");
     }
 
@@ -151,11 +150,12 @@ public class PautaServiceImpl implements PautaService {
     }
 
     @Override
-    public void cadastrarVotosRealizados(CooperadoDTO cooperadoDTO) {
+    public ResponseEntity cadastrarVotosRealizados(CooperadoDTO cooperadoDTO) {
         VotacoesRealizadas votacoesRealizadas = new VotacoesRealizadas();
         votacoesRealizadas.setId_pauta(cooperadoDTO.getPauta_id());
         votacoesRealizadas.setCpf_cooperado(cooperadoDTO.getCpf());
         votacoesRealizadasRepository.save(votacoesRealizadas);
+        return ResponseEntity.ok(votacoesRealizadas);
     }
 
 }

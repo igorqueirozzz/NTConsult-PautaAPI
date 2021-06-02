@@ -26,6 +26,6 @@ public interface PautaService {
 
     void checarStatus(Pauta pauta, Sessao sessao);
 
-    void cadastrarVotosRealizados(CooperadoDTO cooperadoDTO);
+    ResponseEntity cadastrarVotosRealizados(CooperadoDTO cooperadoDTO);
 
 }
