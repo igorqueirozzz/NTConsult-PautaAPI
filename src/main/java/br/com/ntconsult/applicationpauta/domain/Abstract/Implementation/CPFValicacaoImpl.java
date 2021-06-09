@@ -18,6 +18,7 @@ public class CPFValicacaoImpl implements CPFValidacao {
             validacaoExterna(cpf);
         } catch (Exception e){
             System.out.println("SISTEMA DE VALIDAÇÃO EXTERNA FALHOU O VOTO SERÁ COMPUTADO SEM VALIDAÇÃO DO CPF.");
+            throw new VotoException("SISTEMA DE VALIDAÇÃO EXTERNA FALHOU O VOTO SERÁ COMPUTADO SEM VALIDAÇÃO DO CPF.");
         }
 
     }
@@ -32,6 +33,7 @@ public class CPFValicacaoImpl implements CPFValidacao {
         conn.setRequestProperty("Accept", "application/json");
         if (conn.getResponseCode() != 200) {
             System.out.println("Erro " + conn.getResponseCode() + " ao obter dados da URL " + url);
+            throw new VotoException("SISTEMA DE VALIDAÇÃO EXTERNA FALHOU, O VOTO SERÁ COMPUTADO SEM VALIDAÇÃO.");
         }
 
         BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));

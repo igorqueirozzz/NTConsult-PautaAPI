@@ -42,7 +42,6 @@ public class PautaRepositoryTest {
         pauta.setDescricao("Em votacao");
         pauta.setStatus(StatusPautaEnum.NAOREALIZADA);
         pautaRepository.save(pauta);
-
         List<Pauta> pautas = pautaRepository.findAllNaoIniciadas();
         Assertions.assertThat(pautas).isNotEmpty();
     }
