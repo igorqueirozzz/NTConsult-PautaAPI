@@ -92,9 +92,8 @@ public class PautaServiceImpl implements PautaService {
     @Override
     public void votarEmUmaPauta(CooperadoDTO cooperadoDTO) throws Exception {
 
-        cpfValidacao.validarCPF(cooperadoDTO.getCpf());
-        votacaoService.validarVoto(cooperadoDTO);
         votacaoService.checarSeJaVotou(cooperadoDTO);
+        votacaoService.validarVoto(cooperadoDTO);
 
         Optional<Pauta> pauta = pautaRepository.findById(cooperadoDTO.getPauta_id());
         Optional<Sessao> sessao = sessaoRepository.findByPautaId(cooperadoDTO.getPauta_id());
@@ -112,6 +111,8 @@ public class PautaServiceImpl implements PautaService {
         } else {
             throw new VotoException("ESSA PAUTA NÃO EXISTE");
         }
+
+        cpfValidacao.validarCPF(cooperadoDTO.getCpf());
 
         if (pautaVotar.getVotos_sim() != null){
             votoSim = pautaVotar.getVotos_sim();
