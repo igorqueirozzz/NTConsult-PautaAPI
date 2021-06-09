@@ -22,7 +22,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("br.com.ntconsult.applicationpauta"))
-                .paths(PathSelectors.regex("/PautaApi.*"))
+                .paths(PathSelectors.regex("/api.*"))
                 .build();
     }
 
