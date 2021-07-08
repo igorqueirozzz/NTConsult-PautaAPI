@@ -24,7 +24,7 @@ Tecnologias utilizadas no projeto.
 
 O projeto requer:
 [Java JDK ](https://www.oracle.com/br/java/technologies/javase-jdk11-downloads.html) 11.
-[Apache Maven](https://maven.apache.org/)
+[Apache Maven](https://maven.apache.org/),
 [PostgreSQL](https://www.postgresql.org/download/) 11+
 
 Crie um banco de dados no postgreSQL vá para src/main/resources e edite o arquivo "application-dev.properties" inserindo as informações do banco de dados postgreSQL como o exemplo abaixo:
